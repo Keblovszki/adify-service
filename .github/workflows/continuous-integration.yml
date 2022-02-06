@@ -1,0 +1,26 @@
+name: Continuous Integration
+
+on:
+  push:
+    branches:
+      - "ready/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
+          token: ${{secrets.[Your secret name]}}
+
+      - name: Compile
+        run: mvn install
+
+      - name: Merge to master
+        run: git checkout ${GITHUB_REF#refs/heads/}
+          git rebase origin/master
+          git branch master
+          git push origin master:master
+          git push origin :${GITHUB_REF#refs/heads/}
