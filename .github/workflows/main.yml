@@ -15,3 +15,6 @@ jobs:
           heroku_api_key: ${{secrets.HEROKUS}}
           heroku_app_name: "limitless-waters-22706" #Must be unique in Heroku
           heroku_email: "Hannibal_kk@hotmail.com"
+
+      - name: Run slow tests
+        run: mvn test -DskipTests=false -Dgroups=slow
