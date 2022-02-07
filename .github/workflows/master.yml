@@ -1,9 +1,9 @@
-name: Continuous Integration
+name: Release
 
 on:
   push:
     branches:
-      - "ready/**"
+      - master
 
 jobs:
   build:
@@ -19,12 +19,11 @@ jobs:
         run: mvn install
 
       - name: Running fast tests
-        run: mvn test -DskipTests=false -Dgroups=fast
+        run: mvn test -DskipTests=false -Dgroups=slow
 
-      - name: Merge to master
+      - name: Merge to release
         run: |
           git checkout ${GITHUB_REF#refs/heads/}
-          git rebase origin/master
-          git branch master
-          git push origin master:master
-          git push origin :${GITHUB_REF#refs/heads/}
+          git rebase origin/release
+          git branch release
+          git push origin release:release
