@@ -19,7 +19,8 @@ jobs:
         run: mvn install
 
       - name: Merge to master
-        run: git checkout ${GITHUB_REF#refs/heads/}
+        run: |
+          git checkout ${GITHUB_REF#refs/heads/}
           git rebase origin/master
           git branch master
           git push origin master:master
